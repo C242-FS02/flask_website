@@ -15,7 +15,7 @@ RUN apt-get update && apt-get install -y \
 # Create necessary directories
 RUN mkdir -p ./models/ \
     ./static/images/ \
-    ./static/jpg/ \
+    ./static/png/ \
     ./static/results/
 
 
