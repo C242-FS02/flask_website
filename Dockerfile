@@ -12,8 +12,12 @@ RUN apt-get update && apt-get install -y \
     libexpat1 \
     && rm -rf /var/lib/apt/lists/*
 
-# Create the models directory
-RUN mkdir -p ./models/
+# Create necessary directories
+RUN mkdir -p ./models/ \
+    ./static/images/ \
+    ./static/jpg/ \
+    ./static/results/
+
 
 # Download the model file
 RUN curl -o ./models/sam_vit_b_01ec64.pth https://dl.fbaipublicfiles.com/segment_anything/sam_vit_b_01ec64.pth

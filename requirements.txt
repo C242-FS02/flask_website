@@ -6,3 +6,5 @@ torchvision==0.15.2
 segment_anything
 matplotlib
 scikit-image
+gunicorn
+Werkzeug
