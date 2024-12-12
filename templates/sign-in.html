@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Solafune Login</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/sign-in.css') }}">
+</head>
+    <header>
+        <a href="segmentation.html" class="href">
+            <div class="logo-solafune-header">
+                <img src="https://storage.googleapis.com/image-solafune-project-f242-02/img/solafune-logo1.png" alt="Solafune Logo">
+            </div>
+        </a>
+    </header>
+    <body>
+    <main>
+        <div class="login-container">
+            <div class="form-section">
+                <h2>Sign In</h2>
+                <form>
+                    <label for="email">Email</label>
+                    <input type="email" id="email" placeholder="Enter your email" required>
+                    
+                    <label for="password">Password</label>
+                    <input type="password" id="password" placeholder="Enter your password" required>
+                    
+                    <a href="#" class="forgot-password">Forgot your password?</a>
+                    
+                    <a href="segmentation.html" class="href">
+                        <button type="submit">Sign In</button> 
+                    </a>
+                </form>
+            </div>
+            <div class="info-section">
+                <div class="logo-solafune-info-section container">
+                    <img src="https://storage.googleapis.com/image-solafune-project-f242-02/img/solafune-logo1.png" alt="Solafune Logo">
+                </div>  
+                <div class="i"> 
+                    <h3>Hack The Planet.</h3>
+                    <p>Don't have an account? <a href="sign-up.html">Sign up</a>.</p>
+                </div>
+            </div>
+        </div>
+    </main>
+</body>
+</html>
