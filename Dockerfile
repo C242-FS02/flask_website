@@ -1,10 +1,11 @@
+# Gunakan image base Python 3.9 slim
 FROM python:3.9-slim
 
-# Set the working directory
+# Set working directory di container
 WORKDIR /app
 
-# Install required system dependencies
-RUN apt-get update && apt-get install -y \
+# Install dependencies sistem yang diperlukan
+RUN apt-get update && apt-get install -y --no-install-recommends \
     apt-transport-https \
     ca-certificates \
     gnupg \
@@ -12,25 +13,26 @@ RUN apt-get update && apt-get install -y \
     libexpat1 \
     && rm -rf /var/lib/apt/lists/*
 
-# Create necessary directories
+# Buat direktori yang diperlukan
 RUN mkdir -p ./models/ \
     ./static/images/ \
     ./static/png/ \
     ./static/results/
 
-
-# Download the model file
+# Unduh model file langsung ke folder `models/`
 RUN curl -o ./models/sam_vit_b_01ec64.pth https://dl.fbaipublicfiles.com/segment_anything/sam_vit_b_01ec64.pth
 
-# Copy requirements and install dependencies
+# Copy file requirements terlebih dahulu agar proses build memanfaatkan cache Docker
 COPY requirements.txt ./
+
+# Install library Python dari requirements.txt
 RUN pip install --no-cache-dir -r requirements.txt
 
-# Copy application code into the container
+# Copy semua kode aplikasi ke container
 COPY . .
 
-# Expose the Flask default port
+# Expose port default Flask (5000)
 EXPOSE 5000
 
-# Command to run the application
-CMD ["python", "app.py"]
+# Jalankan aplikasi menggunakan Gunicorn untuk performa yang lebih baik
+CMD ["gunicorn", "-w", "4", "-b", "0.0.0.0:5000", "app:app"]
