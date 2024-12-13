@@ -1,4 +1,5 @@
 import os
+from google.cloud import storage
 from flask import Flask, request, render_template, send_from_directory, abort
 from model.sam_model import SAMModel
 import matplotlib.pyplot as plt
@@ -10,6 +11,13 @@ import io
 from pathlib import Path
 from werkzeug.exceptions import RequestEntityTooLarge
 
+# Path kredensial GCP
+os.environ["GOOGLE_APPLICATION_CREDENTIALS"] = "gcp-key.json"
+
+# Inisialisasi client GCS
+storage_client = storage.Client()
+GCS_BUCKET_NAME = "image-solafune-project-f242-02"  # Ganti dengan nama bucket Anda
+bucket = storage_client.bucket(GCS_BUCKET_NAME)
 
 
 def save_image_as_png(image, output_png_path):
@@ -78,8 +86,12 @@ def upload_file():
         return "No selected file", 400
     
     if file and (file.filename.endswith('.tif') or file.filename.endswith('.tiff')):
+        # Upload file ke GCS
+        blob = bucket.blob(file.filename)
+        blob.upload_from_file(file)
+        
         filename = os.path.join(UPLOAD_FOLDER, file.filename)
-        file.save(filename)
+        blob.download_to_filename(filename)
         
         # Segmentasi gambar menggunakan model SAM
         masks = sam_model.segment_image(filename)

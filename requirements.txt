@@ -8,3 +8,4 @@ matplotlib
 scikit-image
 gunicorn
 Werkzeug
+google-cloud-storage
